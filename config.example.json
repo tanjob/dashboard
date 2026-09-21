@@ -1,0 +1,19 @@
+{
+  "_comment_obsidian_vault_path": "Obsidian 仓库根目录路径，用于扫描笔记（如 C:\\Users\\你的用户名\\Desktop）",
+  "obsidian_vault_path": "",
+
+  "_comment_git_repo_path": "要监控的 Git 仓库根目录路径（如 C:\\Projects\\my-tools）",
+  "git_repo_path": "",
+
+  "_comment_git_author": "Git 提交作者名，用于统计该作者的提交记录（git config user.name）",
+  "git_author": "",
+
+  "_comment_data_dir": "数据目录，存放 daily_log.md 等数据文件",
+  "data_dir": "data",
+
+  "_comment_output_dir": "输出目录，存放生成的日报/周报/月报",
+  "output_dir": "output",
+
+  "_comment_chart_output_dir": "图表输出目录，存放生成的 HTML 图表文件",
+  "chart_output_dir": "output"
+}
