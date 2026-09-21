@@ -28,6 +28,37 @@ app = Flask(
     ),
 )
 
+# ========== API Key 认证 ==========
+API_KEY = os.environ.get("API_KEY", "dev-key")
+
+
+@app.before_request
+def check_api_key():
+    """全局 API Key 检查（/health 路径除外）"""
+    # /health 路径不做检查
+    if request.path == "/health":
+        return None
+
+    # 从请求参数 key 或请求头 X-API-Key 获取
+    provided_key = request.args.get("key") or request.headers.get("X-API-Key", "")
+
+    if provided_key != API_KEY:
+        return jsonify({
+            "error": "Unauthorized",
+            "message": "缺少或无效的 API Key",
+        }), 401
+
+    return None
+
+
+@app.route("/health", methods=["GET"])
+def health():
+    """健康检查（不需要认证）"""
+    return jsonify({
+        "status": "ok",
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }), 200
+
 # ========== 首页 HTML ==========
 INDEX_HTML = """
 <!DOCTYPE html>
