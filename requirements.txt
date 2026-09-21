@@ -1,8 +1,10 @@
 # dashboard 项目依赖清单
 #
 # 说明：
-# - 当前项目核心功能只用 Python 标准库（json/os/sys/datetime/subprocess），无需安装任何第三方库
-# - 图表功能使用 Chart.js（前端 JS 库，已下载到 static/chart.min.js），不是 Python 库
-# - pyecharts 为可选依赖：如果后续想用 Python 生成图表（替代 Chart.js），取消下面一行的注释并安装
+# - CLI 核心功能（log_reader/obsidian_reader/git_reader/report_generator）只用 Python 标准库
+# - Web 应用（web_app.py）需要 Flask、gunicorn、markdown
+# - 图表使用 Chart.js（前端 JS 库，已放在 static/chart.min.js），不是 Python 依赖
 
-# pyecharts>=2.0.0
+flask>=3.0
+gunicorn>=21.0
+markdown>=3.5

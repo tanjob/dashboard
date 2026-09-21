@@ -274,6 +274,7 @@ def generate(report_type):
 
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
     print("dashboard Web 应用启动")
-    print("访问: http://127.0.0.1:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    print(f"访问: http://0.0.0.0:{port}")
+    app.run(host="0.0.0.0", port=port)
