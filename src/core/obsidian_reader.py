@@ -29,8 +29,9 @@ def scan_notes():
     vault_path = config["obsidian_vault_path"]
     exclude_folders = config.get("exclude_folders", [])
 
-    if not os.path.exists(vault_path):
-        raise FileNotFoundError(f"Obsidian 仓库路径不存在: {vault_path}")
+    # 路径为空或不存在时返回空列表（如云端部署没有本地 Obsidian 仓库）
+    if not vault_path or not os.path.exists(vault_path):
+        return []
 
     notes = []
     for root, dirs, files in os.walk(vault_path):

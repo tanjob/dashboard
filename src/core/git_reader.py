@@ -30,8 +30,9 @@ def get_commits():
     repo_path = config["git_repo_path"]
     author = config["git_author"]
 
-    if not os.path.exists(repo_path):
-        raise FileNotFoundError(f"Git 仓库路径不存在: {repo_path}")
+    # 路径为空或不存在时返回空列表（如云端部署没有本地 Git 仓库）
+    if not repo_path or not os.path.exists(repo_path):
+        return []
 
     # 调用 git log 命令
     cmd = [
