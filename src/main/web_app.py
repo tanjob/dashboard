@@ -59,6 +59,43 @@ def health():
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }), 200
 
+
+@app.route("/log", methods=["POST"])
+def add_log():
+    """新增日志记录
+
+    请求体: {"date": "2026-09-22", "content": "今天做了什么"}
+    响应: {"status": "ok"}
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"status": "error", "message": "请求体必须是 JSON"}), 400
+
+        log_date = data.get("date", "")
+        content = data.get("content", "")
+        if not log_date or not content:
+            return jsonify({"status": "error", "message": "date 和 content 不能为空"}), 400
+
+        # 插入 SQLite 数据库
+        from common.config import get_config
+        from common.utils import get_data_path
+
+        db_path = get_data_path("dashboard.db")
+        import sqlite3
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS daily_log (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, content TEXT)"
+        )
+        cursor.execute("INSERT INTO daily_log (date, content) VALUES (?, ?)", (log_date, content))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"status": "ok"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 # ========== 首页 HTML ==========
 INDEX_HTML = """
 <!DOCTYPE html>
